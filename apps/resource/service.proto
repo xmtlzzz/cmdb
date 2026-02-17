@@ -1,0 +1,88 @@
+syntax="proto3";
+
+package g17.apps.resources.pb;
+option go_package="cmdb/apps/resource";
+
+service Rpc {
+  rpc Search (SearchRequestSet) returns (ResourceSet);
+  rpc Save (Resource) returns (Resource);
+}
+
+message SearchRequestSet{
+  int64 page_size = 1;
+  int64 page_number = 2;
+  string keywords = 3;
+  optional Type type = 4;
+  map<string,string> tags = 5;
+}
+
+message ResourceSet{
+  int64 total = 1;
+  repeated Resource items = 2;
+}
+
+message Resource {
+  Meta Meta = 1;
+  Spec Spec = 2;
+  Status Status = 3;
+}
+
+message Meta {
+  string id = 1;
+  // 通常指的是在哪个账号，用于区分不同公司的用户资源
+  string domain = 2;
+  string namespace = 3;
+  string env = 4;
+  int64 create_at = 5;
+  int64 delete_at = 6;
+  string delete_by = 7;
+  int64 sync_at = 8;
+  string sync_by = 9;
+  string credential_id = 10;
+  string serial_number = 11;
+}
+
+enum Vendor {
+  ALIYUN = 0;
+  TENCENT = 1;
+  HUAWEI = 2;
+  VSPHERE = 3;
+  AMAZON = 4;
+}
+
+enum Type {
+  HOST = 0;
+  RDS = 1;
+  REDIS = 2;
+  BUCKET = 3;
+  DISK = 4;
+  LB = 5;
+}
+
+message Spec {
+  Vendor vendor = 1;
+  Type resource_type = 2;
+  string region = 3;
+  string owner = 4;
+  string name = 5;
+  string category = 6;
+  string type = 7;
+  string description = 8;
+  int64 expire_at = 9;
+  int64 cpu = 10;
+  int64 gpu = 11;
+  int64 memory = 12;
+  int64 storage = 13;
+  int32 bandwidth = 14;
+  map<string,string> tags = 15;
+  map<string,string> extra = 16;
+}
+
+message  Status {
+  string phase = 1;
+  string describe = 2;
+  string lock_mode = 3;
+  string lock_reason = 4;
+  repeated string public_address = 5;
+  repeated string private_address = 6;
+}
