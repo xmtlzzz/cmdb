@@ -23,7 +23,7 @@ const (
 	Rpc_Save_FullMethodName   = "/g17.apps.resources.pb.Rpc/Save"
 )
 
-// RpcClient is the client API for Rpc service.
+// RpcClient is the client api for Rpc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RpcClient interface {
@@ -59,7 +59,7 @@ func (c *rpcClient) Save(ctx context.Context, in *Resource, opts ...grpc.CallOpt
 	return out, nil
 }
 
-// RpcServer is the server API for Rpc service.
+// RpcServer is the server api for Rpc service.
 // All implementations must embed UnimplementedRpcServer
 // for forward compatibility.
 type RpcServer interface {

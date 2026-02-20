@@ -263,10 +263,13 @@ func (x *ResourceSet) GetItems() []*Resource {
 }
 
 type Resource struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Meta          *Meta                  `protobuf:"bytes,1,opt,name=Meta,proto3" json:"Meta,omitempty"`
-	Spec          *Spec                  `protobuf:"bytes,2,opt,name=Spec,proto3" json:"Spec,omitempty"`
-	Status        *Status                `protobuf:"bytes,3,opt,name=Status,proto3" json:"Status,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// @inject_tag: bson:"inline"
+	Meta *Meta `protobuf:"bytes,1,opt,name=Meta,proto3" json:"Meta,omitempty" bson:"inline"`
+	// @inject_tag: bson:"inline"
+	Spec *Spec `protobuf:"bytes,2,opt,name=Spec,proto3" json:"Spec,omitempty" bson:"inline"`
+	// @inject_tag: bson:"inline"
+	Status        *Status `protobuf:"bytes,3,opt,name=Status,proto3" json:"Status,omitempty" bson:"inline"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -324,10 +327,13 @@ func (x *Resource) GetStatus() *Status {
 
 type Meta struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: json:"id" validate:"required"
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id" validate:"required"`
 	// 通常指的是在哪个账号，用于区分不同公司的用户资源
-	Domain        string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
-	Namespace     string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	// @inject_tag: json:"domain" validate:"required"
+	Domain string `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain" validate:"required"`
+	// @inject_tag: json:"namespace" validate:"required"
+	Namespace     string `protobuf:"bytes,3,opt,name=namespace,proto3" json:"namespace" validate:"required"`
 	Env           string `protobuf:"bytes,4,opt,name=env,proto3" json:"env,omitempty"`
 	CreateAt      int64  `protobuf:"varint,5,opt,name=create_at,json=createAt,proto3" json:"create_at,omitempty"`
 	DeleteAt      int64  `protobuf:"varint,6,opt,name=delete_at,json=deleteAt,proto3" json:"delete_at,omitempty"`
@@ -448,23 +454,25 @@ func (x *Meta) GetSerialNumber() string {
 }
 
 type Spec struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Vendor        Vendor                 `protobuf:"varint,1,opt,name=vendor,proto3,enum=g17.apps.resources.pb.Vendor" json:"vendor,omitempty"`
-	ResourceType  Type                   `protobuf:"varint,2,opt,name=resource_type,json=resourceType,proto3,enum=g17.apps.resources.pb.Type" json:"resource_type,omitempty"`
-	Region        string                 `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
-	Owner         string                 `protobuf:"bytes,4,opt,name=owner,proto3" json:"owner,omitempty"`
-	Name          string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	Category      string                 `protobuf:"bytes,6,opt,name=category,proto3" json:"category,omitempty"`
-	Type          string                 `protobuf:"bytes,7,opt,name=type,proto3" json:"type,omitempty"`
-	Description   string                 `protobuf:"bytes,8,opt,name=description,proto3" json:"description,omitempty"`
-	ExpireAt      int64                  `protobuf:"varint,9,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
-	Cpu           int64                  `protobuf:"varint,10,opt,name=cpu,proto3" json:"cpu,omitempty"`
-	Gpu           int64                  `protobuf:"varint,11,opt,name=gpu,proto3" json:"gpu,omitempty"`
-	Memory        int64                  `protobuf:"varint,12,opt,name=memory,proto3" json:"memory,omitempty"`
-	Storage       int64                  `protobuf:"varint,13,opt,name=storage,proto3" json:"storage,omitempty"`
-	Bandwidth     int32                  `protobuf:"varint,14,opt,name=bandwidth,proto3" json:"bandwidth,omitempty"`
-	Tags          map[string]string      `protobuf:"bytes,15,rep,name=tags,proto3" json:"tags,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	Extra         map[string]string      `protobuf:"bytes,16,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// @inject_tag: json:"vendor"
+	Vendor        Vendor            `protobuf:"varint,1,opt,name=vendor,proto3,enum=g17.apps.resources.pb.Vendor" json:"vendor"`
+	ResourceType  Type              `protobuf:"varint,2,opt,name=resource_type,json=resourceType,proto3,enum=g17.apps.resources.pb.Type" json:"resource_type,omitempty"`
+	Region        string            `protobuf:"bytes,3,opt,name=region,proto3" json:"region,omitempty"`
+	Zone          string            `protobuf:"bytes,4,opt,name=zone,proto3" json:"zone,omitempty"`
+	Owner         string            `protobuf:"bytes,5,opt,name=owner,proto3" json:"owner,omitempty"`
+	Name          string            `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	Category      string            `protobuf:"bytes,7,opt,name=category,proto3" json:"category,omitempty"`
+	Type          string            `protobuf:"bytes,8,opt,name=type,proto3" json:"type,omitempty"`
+	Description   string            `protobuf:"bytes,9,opt,name=description,proto3" json:"description,omitempty"`
+	ExpireAt      int64             `protobuf:"varint,10,opt,name=expire_at,json=expireAt,proto3" json:"expire_at,omitempty"`
+	Cpu           int64             `protobuf:"varint,11,opt,name=cpu,proto3" json:"cpu,omitempty"`
+	Gpu           int64             `protobuf:"varint,12,opt,name=gpu,proto3" json:"gpu,omitempty"`
+	Memory        int64             `protobuf:"varint,13,opt,name=memory,proto3" json:"memory,omitempty"`
+	Storage       int64             `protobuf:"varint,14,opt,name=storage,proto3" json:"storage,omitempty"`
+	Bandwidth     int32             `protobuf:"varint,15,opt,name=bandwidth,proto3" json:"bandwidth,omitempty"`
+	Tags          map[string]string `protobuf:"bytes,17,rep,name=tags,proto3" json:"tags,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Extra         map[string]string `protobuf:"bytes,18,rep,name=extra,proto3" json:"extra,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -516,6 +524,13 @@ func (x *Spec) GetResourceType() Type {
 func (x *Spec) GetRegion() string {
 	if x != nil {
 		return x.Region
+	}
+	return ""
+}
+
+func (x *Spec) GetZone() string {
+	if x != nil {
+		return x.Zone
 	}
 	return ""
 }
@@ -730,25 +745,26 @@ const file_apps_resource_service_proto_rawDesc = "" +
 	"\async_by\x18\t \x01(\tR\x06syncBy\x12#\n" +
 	"\rcredential_id\x18\n" +
 	" \x01(\tR\fcredentialId\x12#\n" +
-	"\rserial_number\x18\v \x01(\tR\fserialNumber\"\x90\x05\n" +
+	"\rserial_number\x18\v \x01(\tR\fserialNumber\"\xa4\x05\n" +
 	"\x04Spec\x125\n" +
 	"\x06vendor\x18\x01 \x01(\x0e2\x1d.g17.apps.resources.pb.VendorR\x06vendor\x12@\n" +
 	"\rresource_type\x18\x02 \x01(\x0e2\x1b.g17.apps.resources.pb.TypeR\fresourceType\x12\x16\n" +
-	"\x06region\x18\x03 \x01(\tR\x06region\x12\x14\n" +
-	"\x05owner\x18\x04 \x01(\tR\x05owner\x12\x12\n" +
-	"\x04name\x18\x05 \x01(\tR\x04name\x12\x1a\n" +
-	"\bcategory\x18\x06 \x01(\tR\bcategory\x12\x12\n" +
-	"\x04type\x18\a \x01(\tR\x04type\x12 \n" +
-	"\vdescription\x18\b \x01(\tR\vdescription\x12\x1b\n" +
-	"\texpire_at\x18\t \x01(\x03R\bexpireAt\x12\x10\n" +
-	"\x03cpu\x18\n" +
-	" \x01(\x03R\x03cpu\x12\x10\n" +
-	"\x03gpu\x18\v \x01(\x03R\x03gpu\x12\x16\n" +
-	"\x06memory\x18\f \x01(\x03R\x06memory\x12\x18\n" +
-	"\astorage\x18\r \x01(\x03R\astorage\x12\x1c\n" +
-	"\tbandwidth\x18\x0e \x01(\x05R\tbandwidth\x129\n" +
-	"\x04tags\x18\x0f \x03(\v2%.g17.apps.resources.pb.Spec.TagsEntryR\x04tags\x12<\n" +
-	"\x05extra\x18\x10 \x03(\v2&.g17.apps.resources.pb.Spec.ExtraEntryR\x05extra\x1a7\n" +
+	"\x06region\x18\x03 \x01(\tR\x06region\x12\x12\n" +
+	"\x04zone\x18\x04 \x01(\tR\x04zone\x12\x14\n" +
+	"\x05owner\x18\x05 \x01(\tR\x05owner\x12\x12\n" +
+	"\x04name\x18\x06 \x01(\tR\x04name\x12\x1a\n" +
+	"\bcategory\x18\a \x01(\tR\bcategory\x12\x12\n" +
+	"\x04type\x18\b \x01(\tR\x04type\x12 \n" +
+	"\vdescription\x18\t \x01(\tR\vdescription\x12\x1b\n" +
+	"\texpire_at\x18\n" +
+	" \x01(\x03R\bexpireAt\x12\x10\n" +
+	"\x03cpu\x18\v \x01(\x03R\x03cpu\x12\x10\n" +
+	"\x03gpu\x18\f \x01(\x03R\x03gpu\x12\x16\n" +
+	"\x06memory\x18\r \x01(\x03R\x06memory\x12\x18\n" +
+	"\astorage\x18\x0e \x01(\x03R\astorage\x12\x1c\n" +
+	"\tbandwidth\x18\x0f \x01(\x05R\tbandwidth\x129\n" +
+	"\x04tags\x18\x11 \x03(\v2%.g17.apps.resources.pb.Spec.TagsEntryR\x04tags\x12<\n" +
+	"\x05extra\x18\x12 \x03(\v2&.g17.apps.resources.pb.Spec.ExtraEntryR\x05extra\x1a7\n" +
 	"\tTagsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\x1a8\n" +

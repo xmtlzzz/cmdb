@@ -22,15 +22,21 @@ message ResourceSet{
 }
 
 message Resource {
+  // @inject_tag: bson:"inline"
   Meta Meta = 1;
+  // @inject_tag: bson:"inline"
   Spec Spec = 2;
+  // @inject_tag: bson:"inline"
   Status Status = 3;
 }
 
 message Meta {
+  // @inject_tag: json:"id" validate:"required"
   string id = 1;
   // 通常指的是在哪个账号，用于区分不同公司的用户资源
+  // @inject_tag: json:"domain" validate:"required"
   string domain = 2;
+  // @inject_tag: json:"namespace" validate:"required"
   string namespace = 3;
   string env = 4;
   int64 create_at = 5;
@@ -60,22 +66,24 @@ enum Type {
 }
 
 message Spec {
+  // @inject_tag: json:"vendor"
   Vendor vendor = 1;
   Type resource_type = 2;
   string region = 3;
-  string owner = 4;
-  string name = 5;
-  string category = 6;
-  string type = 7;
-  string description = 8;
-  int64 expire_at = 9;
-  int64 cpu = 10;
-  int64 gpu = 11;
-  int64 memory = 12;
-  int64 storage = 13;
-  int32 bandwidth = 14;
-  map<string,string> tags = 15;
-  map<string,string> extra = 16;
+  string zone = 4;
+  string owner = 5;
+  string name = 6;
+  string category = 7;
+  string type = 8;
+  string description = 9;
+  int64 expire_at = 10;
+  int64 cpu = 11;
+  int64 gpu = 12;
+  int64 memory = 13;
+  int64 storage = 14;
+  int32 bandwidth = 15;
+  map<string,string> tags = 17;
+  map<string,string> extra = 18;
 }
 
 message  Status {
