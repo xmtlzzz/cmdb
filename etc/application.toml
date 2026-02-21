@@ -1,3 +1,28 @@
+[app]
+name        = "cmdb"
+description = "cmdb"
+encrypt_key = "a7sMQbkYmIuISgOlcqJNkoPu15ik1r608zRsIdMHHeQ="
+
+[http]
+# 是否开启HTTP Server, 默认会根据是否有注册得有API对象来自动开启
+enable = true
+# HTTP服务Host
+host   = "127.0.0.1"
+# HTTP服务端口
+port   = 8080
+
+[grpc]
+# 开启GRPC服务
+enable = true
+# Server监听的地址
+host = "127.0.0.1"
+# Server监听的端口
+port = 18080
+# 开启recovery恢复
+recovery = true
+# 开启Trace
+trace = true
+
 [mongo]
-  endpoints = ["192.168.136.101:27017"]
-  database = "resourecs"
+endpoints = ["192.168.136.101:27017"]
+database  = "resources"

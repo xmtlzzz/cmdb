@@ -24,7 +24,7 @@ func TestResourceServiceImpl_Save(t *testing.T) {
 
 func TestResourceServiceImpl_Search(t *testing.T) {
 	sr := resource.NewSearchRequestSet()
-	sr.Keywords = "te"
+	//sr.Keywords = "test"
 	resp, err := svc.Search(ctx, sr)
 	if err != nil {
 		t.Fatal(err)

@@ -26,18 +26,18 @@ func (s *ResourceServiceImpl) Search(ctx context.Context, r *resource.SearchRequ
 		for k, v := range r.Tags {
 			filter[k] = v
 		}
-		// 查找逻辑
-		resp, err := s.coll.Find(ctx, filter, options.Find().SetLimit(r.PageSize).SetSkip(r.SetSkip()))
-		if err != nil {
+	}
+	// 查找逻辑
+	resp, err := s.coll.Find(ctx, filter, options.Find().SetLimit(r.PageSize).SetSkip(r.SetSkip()))
+	if err != nil {
+		return nil, err
+	}
+	for resp.Next(ctx) {
+		res := &resource.Resource{}
+		if err := resp.Decode(res); err != nil {
 			return nil, err
 		}
-		for resp.Next(ctx) {
-			res := &resource.Resource{}
-			if err := resp.Decode(res); err != nil {
-				return nil, err
-			}
-			set.Items = append(set.Items, res)
-		}
+		set.Items = append(set.Items, res)
 	}
 	return set, nil
 }
