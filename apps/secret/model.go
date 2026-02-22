@@ -8,6 +8,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/infraboard/mcube/v2/crypto/cbc"
+	_ "github.com/infraboard/mcube/v2/desense"
 	"github.com/infraboard/mcube/v2/tools/pretty"
 	"github.com/infraboard/mcube/v2/types"
 )
@@ -32,7 +33,7 @@ func NewSecret(in *CreateSecretRequest) *Secret {
 type Secret struct {
 	Id                  string `json:"id" bson:"id"`
 	UpdateAt            int64  `json:"update_at" bson:"update_at"`
-	CreateSecretRequest `bson:"inline"`
+	CreateSecretRequest `bson:"inline" mask:"default"`
 }
 
 func (s *Secret) SetDefault() *Secret {
@@ -56,18 +57,17 @@ func NewCreateSecretRequest() *CreateSecretRequest {
 type CreateSecretRequest struct {
 	// 名称
 	Name string `json:"name"`
-	//
+	// 云商分类
 	Vendor resource.Vendor `json:"vendor"`
 	// Vmware
 	Address string `json:"address"`
 	// 需要被脱敏
-	// Musk
+	// Mask
 	ApiKey string `json:"api_key"`
-	//
-	ApiSecret string `json:"api_secret" mask:",5,4"`
-	//
+	// API秘钥
+	ApiSecret string `json:"api_secret" mask:"default"`
+	// 是否加密
 	isEncrypted bool
-
 	// 资源所在区域
 	Regions []string `json:"regions"`
 	// 通过分页大小

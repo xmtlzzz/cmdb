@@ -7,12 +7,15 @@ import (
 
 	_ "cmdb/apps"
 
+	"github.com/infraboard/mcube/v2/ioc"
 	_ "github.com/infraboard/mcube/v2/ioc/apps/apidoc/restful"
 	"github.com/infraboard/mcube/v2/ioc/server"
 )
 
 func init() {
 	test.SetUp()
+	// 去使能debug日志
+	ioc.SetDebug(false)
 }
 
 func main() {

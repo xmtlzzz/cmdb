@@ -13,7 +13,7 @@ import (
 
 // 将内容注册到IoC池子
 func init() {
-	ioc.Controller().Registry(&ResourceApiHandler{})
+	ioc.Api().Registry(&ResourceApiHandler{})
 }
 
 type ResourceApiHandler struct {
@@ -29,6 +29,7 @@ func (s *ResourceApiHandler) Name() string {
 func (s *ResourceApiHandler) Init() error {
 	// 获取gorestful的webservice对象实例
 	ws := gorestful.ObjectRouter(s)
+
 	// mcube框架需要注入的tags标签
 	tags := []string{"resource资源管理"}
 	ws.Route(ws.GET("").To(s.Search).Doc("资源管理").
