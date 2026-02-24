@@ -48,7 +48,6 @@ func (s *Secret) Sync(cb SyncResourceHandleFunc) error {
 				if err != nil {
 					return err // 也建议改为 return err，而非 panic
 				}
-
 				// 遍历Instance并且通过自定义函数格式化内容到resource.Resource
 				for _, ins := range response.Response.InstanceSet {
 					cb(ResourceResponse{Resource: FormatTencentCVM(ins)})
@@ -61,7 +60,6 @@ func (s *Secret) Sync(cb SyncResourceHandleFunc) error {
 					break
 				}
 			}
-
 		}
 	case resource.Vendor_ALIYUN:
 	}

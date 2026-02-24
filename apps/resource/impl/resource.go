@@ -47,9 +47,12 @@ func (s *ResourceServiceImpl) Save(ctx context.Context, r *resource.Resource) (*
 	if err := r.Validate(); err != nil {
 		return nil, err
 	}
-	_, err := s.coll.InsertOne(ctx, r)
+
+	// 因为更新内容是多次操作，避免提示duplicate字段值,需要设置$set，否则无法插入
+	_, err := s.coll.UpdateOne(ctx, bson.M{"id": r.Meta.Id}, bson.M{"$set": r}, options.Update().SetUpsert(true))
 	if err != nil {
 		exception.NewBadRequest("写入错误，resource.go 26")
+		return nil, err
 	}
 	return r, nil
 }

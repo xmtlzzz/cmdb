@@ -2,6 +2,7 @@ package impl_test
 
 import (
 	"cmdb/apps/resource"
+	_ "cmdb/apps/resource/impl"
 	"cmdb/apps/secret"
 	_ "cmdb/apps/secret/impl"
 	"cmdb/test"
