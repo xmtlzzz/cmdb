@@ -86,6 +86,13 @@ func (s SecretServiceImpl) describeSecret(ctx context.Context, request *secret.D
 }
 
 func (s SecretServiceImpl) SyncResource(ctx context.Context, request *secret.SyncResourceRequest, handleFunc secret.SyncResourceHandleFunc) error {
-	//TODO implement me
-	panic("implement me")
+	//se := secret.NewSecret(secret.NewCreateSecretRequest())
+	//se.Vendor = resource.Vendor_TENCENT
+	//se.ApiKey = "AKIDTq7LXXKsCXjgQiqmTwA8rSRHvSnz74FE"
+	//se.ApiSecret = "nMjx2uYjgOuCF4g5F9oFrFOK2VjiTt65"
+	se, _ := s.DescribeSecret(ctx, secret.NewDescribeSecretRequest(request.Id))
+	if err := se.Sync(handleFunc); err != nil {
+		return err
+	}
+	return nil
 }

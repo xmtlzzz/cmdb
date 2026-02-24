@@ -58,3 +58,11 @@ func NewSearchRequestSet() *SearchRequestSet {
 		Tags:       map[string]string{},
 	}
 }
+
+func NewResource() *Resource {
+	return &Resource{
+		Meta:   &Meta{},
+		Spec:   &Spec{},
+		Status: &Status{},
+	}
+}

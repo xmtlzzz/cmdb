@@ -50,3 +50,11 @@ func TestSecretServiceImpl_DescribeSecret(t *testing.T) {
 	}
 	t.Log(res)
 }
+
+func TestSecretServiceImpl_SyncResource(t *testing.T) {
+	if err := svc.SyncResource(ctx, secret.NewSyncResourceRequest("88b46c44-bfb8-3ec1-b148-fa400a18a605"), func(in secret.ResourceResponse) {
+		t.Log(in)
+	}); err != nil {
+		t.Fatal(err)
+	}
+}

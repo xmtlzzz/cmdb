@@ -9,6 +9,8 @@ require (
 	github.com/emicklei/go-restful/v3 v3.13.0
 	github.com/google/uuid v1.6.0
 	github.com/infraboard/mcube/v2 v2.1.1
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.3.48
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cvm v1.3.48
 	go.mongodb.org/mongo-driver v1.17.4
 	go.mongodb.org/mongo-driver/v2 v2.5.0
 	google.golang.org/grpc v1.75.0
