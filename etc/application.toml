@@ -1,7 +1,8 @@
 [app]
 name        = "cmdb"
 description = "cmdb"
-encrypt_key = "a7sMQbkYmIuISgOlcqJNkoPu15ik1r608zRsIdMHHeQ="
+# 写入对应云商的secret
+encrypt_key = "XXX"
 
 [http]
 # 是否开启HTTP Server, 默认会根据是否有注册得有API对象来自动开启
