@@ -4,14 +4,18 @@ import (
 	"cmdb/apps/resource"
 	"cmdb/apps/secret"
 	"log"
+	"mcenter/permission"
 	"net/http"
 
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/emicklei/go-restful/v3"
 	"github.com/gorilla/websocket"
+	"github.com/infraboard/mcube/v2/exception"
 	"github.com/infraboard/mcube/v2/http/binding"
+	"github.com/infraboard/mcube/v2/http/restful/response"
 	"github.com/infraboard/mcube/v2/ioc"
 	"github.com/infraboard/mcube/v2/ioc/config/gorestful"
+	"github.com/infraboard/modules/iam/apps/endpoint"
 )
 
 func init() {
@@ -33,7 +37,7 @@ func (s *SecretApiHandler) Init() error {
 	// mcube框架需要注入的tags标签
 	tags := []string{"secret凭证管理"}
 
-	ws.Route(ws.POST("/").To(s.CreateSecret).Doc("凭证管理").
+	ws.Route(ws.POST("").To(s.CreateSecret).Doc("凭证管理").
 		// swagger api文档注解
 		Param(ws.PathParameter("vendor", "云商分类").DataType("int64")).
 		Param(ws.PathParameter("api_key", "API Key").DataType("string")).
@@ -45,7 +49,13 @@ func (s *SecretApiHandler) Init() error {
 		Returns(200, "Normal", secret.CreateSecretRequest{}).
 		Returns(404, "Error", ""))
 
-	ws.Route(ws.GET("/").To(s.QuerySecret).Doc("凭证管理").
+	ws.Route(ws.GET("").To(s.QuerySecret).Doc("凭证管理").
+		// mcenter鉴权、认证逻辑注入
+		Metadata(permission.Auth(true)).
+		Metadata(permission.Permission(true)).
+		// 对接mcenter sdk，action、resource 2个字段注入值
+		Metadata(endpoint.META_ACTION_KEY, "list").
+		Metadata(endpoint.META_RESOURCE_KEY, "secret").
 		// swagger api文档注解
 		Param(ws.PathParameter("page_size", "页面数量").DataType("int64")).
 		Param(ws.PathParameter("page_number", "当前页面").DataType("int64")).
@@ -54,7 +64,7 @@ func (s *SecretApiHandler) Init() error {
 		// swagger api文档生成所需内容
 		Writes(SecretSet{}).
 		Returns(200, "Normal", SecretSet{}).
-		Returns(404, "Error", ""))
+		Returns(404, "Error", exception.NewNotFound("")))
 
 	ws.Route(ws.GET("/{id}").To(s.DescribeSecret).Doc("凭证详情").
 		// swagger api文档注解
@@ -103,16 +113,15 @@ func (s *SecretApiHandler) QuerySecret(req *restful.Request, resp *restful.Respo
 	qr := secret.NewQuerySecretRequest()
 	// 调用mcube封装的gin bind逻辑获取前端参数
 	if err := binding.Query.Bind(req.Request, qr); err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, "获取前端参数错误")
+		response.Failed(resp, exception.NewBadRequest(err.Error()))
 		return
 	}
 	res, err := secret.GetService().QuerySecret(req.Request.Context(), qr)
 	if err != nil {
-		resp.WriteErrorString(http.StatusBadRequest, "无法查询到内容，检查前后端逻辑")
+		response.Failed(resp, err)
 		return
 	}
-	resp.WriteEntity(res)
-	return
+	response.Success(resp, res)
 }
 
 func (s *SecretApiHandler) DescribeSecret(req *restful.Request, resp *restful.Response) {

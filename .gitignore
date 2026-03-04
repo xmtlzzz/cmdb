@@ -1,0 +1,14 @@
+# Config files (contain sensitive info)
+etc/*.toml
+
+# Binary
+cmdb
+*.exe
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

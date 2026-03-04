@@ -1,15 +1,12 @@
 package main
 
 import (
-	"cmdb/test"
-	"context"
-	"log"
-
 	_ "cmdb/apps"
+	"cmdb/test"
 
 	"github.com/infraboard/mcube/v2/ioc"
 	_ "github.com/infraboard/mcube/v2/ioc/apps/apidoc/restful"
-	"github.com/infraboard/mcube/v2/ioc/server"
+	"github.com/infraboard/mcube/v2/ioc/server/cmd"
 )
 
 func init() {
@@ -19,7 +16,5 @@ func init() {
 }
 
 func main() {
-	if err := server.Run(context.TODO()); err != nil {
-		log.Fatal(err)
-	}
+	cmd.Start()
 }

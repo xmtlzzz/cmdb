@@ -6,5 +6,5 @@ import (
 
 // 各个功能测试初始化配置文件路径
 func SetUp() {
-	ioc.DevelopmentSetupWithPath("C:\\Users\\Administrator\\Desktop\\code\\Go\\cmdb\\etc\\application.toml")
+	ioc.DevelopmentSetupWithPath("C:\\Users\\Administrator\\Desktop\\code\\Go\\devcloud-mini\\cmdb\\etc\\application.toml")
 }
