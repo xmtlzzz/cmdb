@@ -4,6 +4,7 @@ import (
 	"cmdb/apps/resource"
 	"cmdb/apps/secret"
 	"log"
+	"maudit/audit"
 	"mcenter/permission"
 	"net/http"
 
@@ -53,6 +54,7 @@ func (s *SecretApiHandler) Init() error {
 		// mcenter鉴权、认证逻辑注入
 		Metadata(permission.Auth(true)).
 		Metadata(permission.Permission(true)).
+		Metadata(audit.Audit(true)).
 		// 对接mcenter sdk，action、resource 2个字段注入值
 		Metadata(endpoint.META_ACTION_KEY, "list").
 		Metadata(endpoint.META_RESOURCE_KEY, "secret").

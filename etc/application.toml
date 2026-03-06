@@ -4,7 +4,7 @@ description = "cmdb"
 # 写入对应云商的secret
 encrypt_key = "XXX"
 internal_address = "http://127.0.0.1:8090"
-internal_token = "zf6pPxMNOTxJtCFMI3YKJjSA"
+internal_token = "KADkQEpTWxM1Kt7TTssJYm4j"
 
 [http]
 # 是否开启HTTP Server, 默认会根据是否有注册得有API对象来自动开启
@@ -29,3 +29,14 @@ trace = true
 [mongo]
 endpoints = ["192.168.136.101:27017"]
 database  = "resources"
+
+
+[kafka]
+brokers = ["192.168.136.101:9092"]
+scram_algorithm = "SHA512"
+username = ""
+password = ""
+debug = false
+
+[auditor]
+topic = "maudit_new"
